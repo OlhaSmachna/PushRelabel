@@ -1,0 +1,74 @@
+﻿<Window x:Class="PushRelabel.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PushRelabel"
+        mc:Ignorable="d"
+        Title="PushRelabel" Height="768" Width="1024" WindowStartupLocation="CenterScreen" ResizeMode="CanMinimize">
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="RDictionary.xaml"></ResourceDictionary>
+            </ResourceDictionary.MergedDictionaries>
+            <local:ValueConverter x:Key="myConverter"/>
+        </ResourceDictionary>
+    </Window.Resources>
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="0.35*"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="0.3*"/>
+        </Grid.RowDefinitions>
+
+        <Border Grid.Column="0" Grid.Row="0" Grid.RowSpan="2" Background="Gray" BorderBrush="Black" BorderThickness="0,0,3,0">
+            <StackPanel>
+                <Button Click="CreateGraph_ButtonClick">Створити мережу</Button>
+                <StackPanel Name="SubMenuPanel" Visibility="Collapsed">
+                    <Button Click="AddVertex_ButtonClick">Додати вершину</Button>
+                    <StackPanel Orientation="Horizontal" Margin="10,10,10,0">
+                        <TextBox Name="from_" FontSize="20" Width="30" Margin="0,0,10,0" MaxLength="2"></TextBox>
+                        <TextBlock FontSize="20" >-</TextBlock>
+                        <TextBox Name="to_" FontSize="20" Width="30" Margin="10,0,3,0" MaxLength="2"></TextBox>
+                        <TextBlock FontSize="20">, cap =</TextBlock>
+                        <TextBox Name="cap_" FontSize="20" Width="80" Margin="10,0" MaxLength="6"></TextBox>
+                    </StackPanel>
+                    <Button Click="AddEdge_ButtonClick">Додати ребро</Button>
+                </StackPanel>
+                <Button Name="b1" IsEnabled="False" Click="GetMaxFlow_ButtonClick">Обчислити</Button>
+                <Button Click="OpenManual_ButtonClick">Інструкція до програми</Button>
+            </StackPanel>
+        </Border>
+
+        <Canvas Name="c" Grid.Column="1" Grid.Row="0">
+            <Label Name="s_" Panel.ZIndex="100" Canvas.Top="{Binding ElementName=c, Path=ActualHeight,
+                Converter={StaticResource myConverter}}" Canvas.Left="10" Visibility="Collapsed">s</Label>
+            <Label Name="t_" Panel.ZIndex="100" Canvas.Top="{Binding ElementName=c, Path=ActualHeight,
+                Converter={StaticResource myConverter}}" Visibility="Collapsed">t</Label>
+        </Canvas>
+        
+        <Border Grid.Column="1" Grid.Row="1" BorderBrush="Black" BorderThickness="0,3,0,0">
+            <StackPanel>
+                <Grid Name="about" Visibility="Collapsed">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="0.1*"/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition Height="0.3*"/>
+                    </Grid.RowDefinitions>
+                    <TextBlock Grid.Column="0" Grid.Row="0" Name="num_text" FontSize="40" Margin="20,10,0,0">1.</TextBlock>
+                    <TextBlock Grid.Column="1" Grid.Row="0" Name="about_text" FontSize="15" Margin="0,15,30,0" TextWrapping="Wrap"/>
+                    <Button Name="next" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Right" Margin="10,10,30,0" Padding="30,5"
+                            Click="Next_ButtonClick">Далі</Button>
+                </Grid>
+                <TextBlock Name="res_" FontSize="25" Margin="15"/>
+            </StackPanel>
+        </Border>
+    </Grid>
+</Window>
